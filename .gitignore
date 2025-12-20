@@ -1,2 +1,5 @@
 Bonus.md
 业务要求.md
+build/
+test/
+.vscode/
