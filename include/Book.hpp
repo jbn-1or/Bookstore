@@ -10,6 +10,8 @@ private:
     std::string keyword;       // 关键词（|分隔，无重复）
     double price;              // 单价（保留2位小数）
     int quantity;              // 库存数量（≥0）
+    bool delete_isbn();        // 删除一个isbn对应的书，用于修改isbn
+
 public:
     Book() = default;
     Book(const std::string& isbn);  // 仅初始化ISBN（用于select创建）
