@@ -1,7 +1,8 @@
 #include "Book.hpp"
 #include "Storage.hpp"
-#include <sstream>
 #include <algorithm>
+
+BlockListManager<Book> BookDataManager("Book.data", MAX_INDEX_LEN, MAX_ENTRIES_PER_BLOCK);
 
 // 构造函数实现
 Book::Book(const std::string& i) : price(0.0), quantity(0) {

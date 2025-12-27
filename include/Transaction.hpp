@@ -1,39 +1,45 @@
 #pragma once
 
-#include <string>
+#include <vector>
 
-#include "Book.hpp"
-#include <iomanip>
+#include "Storage.hpp"
 
 struct Transaction {
-    std::string time;          // 时间戳（YYYY-MM-DD HH:MM:SS）
-    std::string type;          // "buy"或"import"
-    std::string isbn;
+    bool type;                 // 1"buy" 或 0"import"
+    char isbn[MAX_INDEX_LEN];  // 书的编号
     int quantity;              // 交易数量（>0）
     double amount;             // 金额（buy为正，import为负）
-    std::string operator_id;   // 操作人ID
-
+    char operator_id[MAX_INDEX_LEN];   // 操作人ID
     Transaction() = default;
-    Transaction(const std::string& t, const std::string& typ, const std::string& isbn,
-                int qty, double amt, const std::string& op);
-    std::string to_string() const;  // 转换为存储格式字符串
 };
 
-// 交易管理器类实现（负责交易记录的读写与统计）
-class TransactionManager {
-    bool record_transaction(const Transaction& trans) {
-        return true;
-    }
+const int sizeofTr = sizeof(Transaction);
 
-    bool query_transactions(const std::string& type, const std::string& start_time, const std::string& end_time) {
-        return true;
-    }
+inline std::ostream & operator<< (std::ostream &os, const Transaction& trans) {
+    os << trans.amount;
+    return os;
+}
 
-    bool calculate_profit(const std::string& start_time, const std::string& end_time, double& income, double& expense, double& profit) {
-        income = 0.0;
-        expense = 0.0;
-        profit = 0.0;
-        profit = income - expense;
-        return true;
-    }
+class TransManager {
+    private:
+    MemoryRiver <Transaction, 3> TransMem;
+    std::vector<Transaction> trans_in_thisregis = {};
+    int trans_times_when_open;
+    int income_when_open;
+    int outcome_when_open;
+
+    public:
+
+    bool file_exists(const string& filename);
+
+    TransManager(const string& filename);
+
+    ~TransManager(); //析构时写入本地文件
+
+    //添加记录
+    void addRecorg(const Transaction &);
+    //查找全部记录
+    void searchAllRecord();
+    //部分查找
+    bool seatchRecord(const int count);
 };

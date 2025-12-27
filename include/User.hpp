@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Book.hpp"
 #include "Storage.hpp"
 #include <vector>
 #include <string>
@@ -8,7 +9,7 @@ class User {
 private:
     char user_id[MAX_INDEX_LEN];       // 登录ID（唯一）
     char password[MAX_INDEX_LEN];      // 密码
-    int privilege;                     // 权限等级（1/3/7）
+    int privilege = 1;                 // 权限等级（0/1/3/7)
     char username[MAX_INDEX_LEN];      // 用户名
 public:
     User() = default;
@@ -30,12 +31,11 @@ inline std::ostream & operator<< (std::ostream &os, const User& user) {
     return os;
 }
 
-BlockListManager<User> UserDataManager("User.data", MAX_INDEX_LEN, MAX_ENTRIES_PER_BLOCK);
-
 class UserManager {
 private:
     //std::string file_path;                 // 数据文件路径
     std::vector<User> login_stack;          // 嵌套登录栈
+    std::vector<Book> select_book_stack;    // 对应选择的书
     bool find_user(const std::string &user_id);
     bool load_user(const std::string& user_id, User& user);  // 从文件加载单个用户
     void save_user(const User& user);      // 保存用户到文件
@@ -43,7 +43,7 @@ private:
 public:
     UserManager() = default;
     void init_root();                      // 初始化root用户（首次运行）
-    bool register_user(const std::string& user_id, const std::string& pwd, const int priv ,const std::string& name);  // {0}可调用
+    bool register_user(const std::string& user_id, const std::string& pwd, const int priv ,const std::string& name);
     bool login(const std::string& user_id, const std::string& pwd);
     bool logout();
     bool create_user(const std::string& user_id, const std::string& pwd, 

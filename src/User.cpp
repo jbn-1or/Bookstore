@@ -1,5 +1,8 @@
 #include "User.hpp"
 
+BlockListManager<User> UserDataManager("User.data", MAX_INDEX_LEN, MAX_ENTRIES_PER_BLOCK);
+
+
 // User类实现
 User::User(const std::string& id, const std::string& pwd, int priv,
     const std::string& name) : privilege(priv) {
@@ -93,11 +96,11 @@ void UserManager::init_root() {
 }
 
 bool UserManager::register_user(const std::string& user_id, const std::string& pwd, const int priv,const std::string& name) {
-    if (find_user("root")) {
+    // 检查用户是否已存在
+    if (find_user(user_id)) {
         return false;
     }
     User user(user_id, pwd, priv, name);
-    // 检查用户是否已存在
     save_user(user);
     return true;
 }
@@ -107,7 +110,7 @@ bool UserManager::login(const std::string& user_id, const std::string& pwd) {
     if (!load_user(user_id, user)) {
         return false;
     }
-    if (!user.verify_password(pwd)) {
+    if (login_stack.back().get_privilege() <= user.get_privilege() && !user.verify_password(pwd)) {
         return false;
     }
     login_stack.push_back(user);
@@ -169,6 +172,12 @@ bool UserManager::change_password(const std::string& user_id, const std::string&
     delete_user_file(user_id);
     user.set_password(new_pwd);
     save_user(user);
+    // 更改栈上的用户
+    for (int i = 0; i < login_stack.size(); ++i) {
+        if (login_stack[i].get_index() == user_id) {
+            login_stack[i] = user;
+        }
+    }
     return true;
 }
 

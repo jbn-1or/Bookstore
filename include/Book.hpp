@@ -38,8 +38,6 @@ inline std::ostream & operator<< (std::ostream &os, const Book& book) {
      return os;
 }
 
-BlockListManager<Book> BookDataManager("Book.data", MAX_INDEX_LEN, MAX_ENTRIES_PER_BLOCK);
-
 bool load_book(const std::string& book_id, Book& _book);
 bool find_book(const std::string &bool_id);
 bool delete_isbn(const std::string& book_id); 

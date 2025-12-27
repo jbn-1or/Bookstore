@@ -4,5 +4,5 @@ build/
 test/
 .vscode/
 .cache/
-build/
 标准要求.md
+bin/
