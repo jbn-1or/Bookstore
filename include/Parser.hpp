@@ -18,4 +18,6 @@ InputResult inputHandle(const std::string input);
 //   3: author
 //   4: keyword
 //   0: 无效格式
-int parseBookInfo(const std::string& input, std::string& value);
+int parseInfo_show(const std::string& input, std::string& value);
+
+int parseInfo_modify(const std::string& input, std::string& value);

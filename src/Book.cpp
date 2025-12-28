@@ -7,16 +7,9 @@
 BlockListManager<Book> BookDataManager("Book.data", MAX_INDEX_LEN, MAX_ENTRIES_PER_BLOCK);
 
 // 构造函数实现
-Book::Book(const std::string& i) : price_up(0), price_down(0) ,quantity(0){
+Book::Book(const std::string& i) : price_up(0), price_down(0) , quantity(0) {
     std::strncpy(isbn, i.c_str(), MAX_INDEX_LEN - 1);
     isbn[MAX_INDEX_LEN - 1] = '\0';
-    need_update = true;
-}
-
-Book::~Book() {
-    if (need_update) {
-        update_book(*this);
-    }
 }
 
 bool Book::operator<(const Book &other) const {
@@ -35,14 +28,14 @@ std::string Book::get_index() const {
 bool Book::increase_quantity(int num) {
     if (num <= 0) return false;
     quantity += num;
-    need_update = true;
+    update_book(*this);
     return true;
 }
 
 bool Book::decrease_quantity(int num) {
     if (num <= 0 || quantity < num) return false;
     quantity -= num;
-    need_update = true;
+    update_book(*this);
     return true;
 }
 
@@ -65,7 +58,7 @@ bool Book::set_name(const std::string& new_name) {
     //改书
     std::strncpy(name, new_name.c_str(), MAX_INDEX_LEN - 1);
     name[MAX_INDEX_LEN - 1] = '\0';
-    need_update = true;
+    update_book(*this);
     return true;
 }
 
@@ -76,18 +69,17 @@ bool Book::set_author(const std::string& new_author) {
     //删AI
     std::string i(isbn);
     if (author[0] != '\0') {
-        std::string au(author);
-        Name_to_ISBN AI(au, i);
-        deleteNI(AI);
+        Author_to_ISBN oldAI(author, i);
+        deleteAI(oldAI);
     }
     //添新AI
-    Name_to_ISBN AI_(new_author, i);
-    updateNI(AI_);
+    Author_to_ISBN newAI(new_author, i);
+    updateAI(newAI);
 
     //改书
     std::strncpy(author, new_author.c_str(), MAX_INDEX_LEN - 1);
     author[MAX_INDEX_LEN - 1] = '\0';
-    need_update = true;
+    update_book(*this);
     return true;
 }
 
@@ -132,12 +124,13 @@ bool Book::set_keyword(const std::string& new_keyword) {
         //添加
         for (int i = 0; i < keywords.size(); ++i) {
             KeyW_to_ISBN KI(keywords[i], std::string(isbn));
+            updateKI(KI);
         }
 
     // 修改当前书
     std::strncpy(keyword, new_keyword.c_str(), MAX_INDEX_LEN - 1);
     keyword[MAX_INDEX_LEN - 1] = '\0';
-    need_update = true;
+    update_book(*this);
     return true;
 }
 
@@ -145,7 +138,7 @@ bool Book::set_price(const long long & newp) {
     if (newp < 0) return false;
     price_up = newp / 100000000;
     price_down = newp % 100000000;
-    need_update = true;
+    update_book(*this);
     return true;
 }
 
@@ -189,16 +182,16 @@ bool Book::set_isbn(const std::string& new_isbn) {
     ////修改AI
     if (author[0] != '\0') {
         std::string au(author);
-        Name_to_ISBN AI(au, std::string(isbn));
-        deleteNI(AI);
-        Name_to_ISBN AI_(au, std::string(new_isbn));
-        updateNI(AI_);
+        Author_to_ISBN AI(au, std::string(isbn));
+        deleteAI(AI);
+        Author_to_ISBN AI_(au, std::string(new_isbn));
+        updateAI(AI_);
     }
     //改书
     delete_isbn(std::string(this->isbn)); //删除旧书
     std::strncpy(isbn, new_isbn.c_str(), MAX_INDEX_LEN - 1);
     isbn[MAX_INDEX_LEN - 1] = '\0';
-    need_update = true;
+    update_book(*this);
     return true;
 }
 

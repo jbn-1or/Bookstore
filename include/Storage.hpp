@@ -138,7 +138,7 @@ public:
 
     BlockListManager(const string& filename, int max_idx_len, int max_entries_per_block)
         : mem_river(filename), max_idx_len_(max_idx_len), max_entries_per_block_(max_entries_per_block) {
-        if (!file_exists(filename)) {
+        //if (!file_exists(filename)) {
             // 文件不存在：初始化 + 创建第一个块
             mem_river.initialise();
             mem_river.write_info(max_idx_len_, 1);
@@ -150,16 +150,16 @@ public:
             first_block.num_entries = 0;
             first_block_id_ = mem_river.write(first_block);
             mem_river.write_info(first_block_id_, 4);
-        } else {
-            // 文件存在：读取元信息和第一个块位置
-            int read_idx_len, read_entries, read_block_size;
-            mem_river.get_info(read_idx_len, 1);
-            mem_river.get_info(read_entries, 2);
-            mem_river.get_info(read_block_size, 3);
-            max_idx_len_ = read_idx_len;
-            max_entries_per_block_ = read_entries;
-            mem_river.get_info(first_block_id_, 4);
-        }
+        // } else {
+        //     // 文件存在：读取元信息和第一个块位置
+        //     int read_idx_len, read_entries, read_block_size;
+        //     mem_river.get_info(read_idx_len, 1);
+        //     mem_river.get_info(read_entries, 2);
+        //     mem_river.get_info(read_block_size, 3);
+        //     max_idx_len_ = read_idx_len;
+        //     max_entries_per_block_ = read_entries;
+        //     mem_river.get_info(first_block_id_, 4);
+        // }
     }
 
     // 插入条目（块满则新建块）

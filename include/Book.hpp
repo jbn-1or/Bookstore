@@ -13,13 +13,11 @@ public:
     int price_up = 0;              // 单价高位
     int price_down = 0;            // 乘100后最低八位
     int quantity = 0;              // 库存数量（≥0）
-    bool need_update = false;
 
     Book() = default;
     Book(const std::string& isbn);  // 仅初始化ISBN（用于select创建）
     Book(const std::string& isbn, const std::string& name, const std::string& author, 
          const std::string& keyword, double price, int quantity);
-    ~Book();
 
     bool operator<(const Book &other) const;
     bool operator== (const Book& other) const;

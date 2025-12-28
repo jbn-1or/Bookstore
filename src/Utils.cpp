@@ -212,10 +212,10 @@ bool Name_to_ISBN::operator== (const Name_to_ISBN &other) const {
 }
 
 bool findName(const std::string &na, std::vector<string> &ISBNs) {
-    std::vector<KeyW_to_ISBN> NIs;
+    std::vector<Name_to_ISBN> NIs;
     ISBNs.clear();
     NIs.clear();
-    KIManager.findEntry(na, NIs);
+    NIManager.findEntry(na, NIs);
     for (int i = 0; i < NIs.size(); ++i) {
         ISBNs.push_back(NIs[i].ISBN);
     }
@@ -258,10 +258,10 @@ bool Author_to_ISBN::operator== (const Author_to_ISBN &other) const {
 }
 
 bool findAuthor(const std::string &au, std::vector<string> &ISBNs) {
-    std::vector<KeyW_to_ISBN> AIs;
+    std::vector<Author_to_ISBN> AIs;
     ISBNs.clear();
     AIs.clear();
-    KIManager.findEntry(au, AIs);
+    AIManager.findEntry(au, AIs);
     for (int i = 0; i < AIs.size(); ++i) {
         ISBNs.push_back(AIs[i].ISBN);
     }
