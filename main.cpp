@@ -73,7 +73,7 @@ int main() {
 
         } else if (in.words[0] == "useradd") {
             if (in.wordCount != 5 || UM.get_current_privilege() < 3
-                    || ! checkUserID_or_Password(in.words[1])
+                    || !checkUserID_or_Password(in.words[1])
                     || !checkUserID_or_Password(in.words[2])
                     || !checkPrivilege(in.words[3])
                     || !checkUsername(in.words[4])) {

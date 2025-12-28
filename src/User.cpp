@@ -127,7 +127,7 @@ bool UserManager::login(const std::string& user_id, const std::string& pwd) {
     if (!load_user(user_id, user)) {
         return false;
     }
-    if (login_stack.back().get_privilege() <= user.get_privilege() && !user.verify_password(pwd)) {
+    if ((!login_stack.empty() && login_stack.back().get_privilege() <= user.get_privilege()) && !user.verify_password(pwd)) {
         return false;
     }
     login_stack.push_back(user);

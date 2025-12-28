@@ -10,7 +10,7 @@ bool checkUserID_or_Password(const std::string & input) {
         return false;
     }
     for (char c : input) {
-        if (!std::isalnum(static_cast<char>(c)) || c == '_') { //数字字母下划线
+        if (!(std::isalnum(static_cast<char>(c)) || c == '_')) { //数字字母下划线
             return false;
         }
     }
