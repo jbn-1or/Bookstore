@@ -95,6 +95,23 @@ void UserManager::init_root() {
     return;
 }
 
+void UserManager::select_book(const Book & bk) {
+    select_book_stack.back() = bk;
+    has_selected.back() = true;
+}
+
+void UserManager::get_select_book(Book &bk) {
+    bk = select_book_stack.back();
+}
+
+void UserManager::update_book_stack(const Book & bk, const Book & newbook) {
+    for (int i = 0; i < select_book_stack.size(); ++i) {
+        if (select_book_stack[i] == bk) {
+            select_book_stack[i] = newbook;
+        }
+    }
+}
+
 bool UserManager::register_user(const std::string& user_id, const std::string& pwd, const int priv,const std::string& name) {
     // 检查用户是否已存在
     if (find_user(user_id)) {
@@ -114,6 +131,8 @@ bool UserManager::login(const std::string& user_id, const std::string& pwd) {
         return false;
     }
     login_stack.push_back(user);
+    select_book_stack.push_back(book0);
+    has_selected.push_back(false);
     return true;
 }
 
@@ -122,6 +141,8 @@ bool UserManager::logout() {
         return false;
     }
     login_stack.pop_back();
+    select_book_stack.pop_back();
+    has_selected.pop_back();
     return true;
 }
 

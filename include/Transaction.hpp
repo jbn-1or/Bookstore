@@ -4,11 +4,13 @@
 
 #include "Storage.hpp"
 
+const int UP = 100000000;
+
 struct Transaction {
     bool type;                 // 1"buy" 或 0"import"
     char isbn[MAX_INDEX_LEN];  // 书的编号
     int quantity;              // 交易数量（>0）
-    double amount;             // 金额（buy为正，import为负）
+    long long amount;             // 金额（buy为正，import为负）(乘100后的)
     char operator_id[MAX_INDEX_LEN];   // 操作人ID
     Transaction() = default;
 };
@@ -22,11 +24,13 @@ inline std::ostream & operator<< (std::ostream &os, const Transaction& trans) {
 
 class TransManager {
     private:
-    MemoryRiver <Transaction, 3> TransMem;
+    MemoryRiver <Transaction, 5> TransMem; 
     std::vector<Transaction> trans_in_thisregis = {};
     int trans_times_when_open;
-    int income_when_open;
-    int outcome_when_open;
+    int income_when_open_up; //乘100的前
+    int income_when_open_down; //乘100的后8位
+    int outcome_when_open_up;
+    int outcome_when_open_down;
 
     public:
 

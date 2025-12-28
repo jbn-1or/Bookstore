@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+const Book book0 = {};
+
 class User {
 private:
     char user_id[MAX_INDEX_LEN];       // 登录ID（唯一）
@@ -45,6 +47,10 @@ public:
     void init_root();                      // 初始化root用户（首次运行）
     bool register_user(const std::string& user_id, const std::string& pwd, const int priv ,const std::string& name);
     bool login(const std::string& user_id, const std::string& pwd);
+    void select_book(const Book & bk);
+    void get_select_book(Book &bk);
+    std::vector<bool> has_selected;
+    void update_book_stack(const Book & bk, const Book & newbook);
     bool logout();
     bool create_user(const std::string& user_id, const std::string& pwd, 
         int priv, const std::string& name);

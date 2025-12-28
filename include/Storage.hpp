@@ -123,8 +123,8 @@ class BlockListManager {
 private:
     MemoryRiver<BlockList<Tem>, 4> mem_river;  // 文件管理对象
     int first_block_id_ = -1;     // 第一个块的存储位置
-    int max_idx_len_;             // 索引最大长度
-    int max_entries_per_block_;   // 每个块最大条目数
+    int max_idx_len_ = MAX_INDEX_LEN;             // 索引最大长度
+    int max_entries_per_block_ = MAX_ENTRIES_PER_BLOCK;   // 每个块最大条目数
 public:
     // 类型别名
     using BlockType = BlockList<Tem>;

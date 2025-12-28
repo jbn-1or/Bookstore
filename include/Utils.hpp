@@ -10,8 +10,8 @@ bool checkPrivilege(const std::string &);
 bool checkISBN(const std::string &);
 bool checkBookName_or_Author(const std::string &);
 bool checkKeyword(const std::string &);
-bool checkQuantity(const std::string &);
-bool checkPrice_or_TotalCost(const std::string &);
+bool checkQuantity(const std::string &, int &);
+bool checkPrice_or_TotalCost(const std::string &, long long &);
 
 
 //查找的辅助类
@@ -21,15 +21,14 @@ class KeyW_to_ISBN {
     char ISBN[MAX_INDEX_LEN];
     
     KeyW_to_ISBN(const std::string & kw, const std::string & i);
-    ~KeyW_to_ISBN();
     std::string get_index() const;
-    bool operator< (const KeyW_to_ISBN & other);
-    bool operator== (const KeyW_to_ISBN & other);
+    bool operator< (const KeyW_to_ISBN & other) const;
+    bool operator== (const KeyW_to_ISBN & other) const;
 };
 
-bool findkeyW(const std::string & kw);
-bool updateKI(const KeyW_to_ISBN & ki);
-bool deleteKI(const KeyW_to_ISBN & ki);
+bool findkeyW(const std::string & kw, std::vector<std::string> ISBNs);
+void updateKI(const KeyW_to_ISBN & ki);
+void deleteKI(const KeyW_to_ISBN & ki);
 
 class Name_to_ISBN {
     public:
@@ -37,27 +36,25 @@ class Name_to_ISBN {
     char ISBN[MAX_INDEX_LEN];
     
     Name_to_ISBN(const std::string & na, const std::string & i);
-    ~Name_to_ISBN();
     std::string get_index() const;
-    bool operator< (const Name_to_ISBN & other);
-    bool operator== (const Name_to_ISBN & other);
+    bool operator< (const Name_to_ISBN & other) const;
+    bool operator== (const Name_to_ISBN & other) const;
 };
 
-bool findName(const std::string & na);
-bool updateNI(const Name_to_ISBN & ni);
-bool deleteNI(const Name_to_ISBN & ni);
+bool findName(const std::string & na, std::vector<std::string> ISBNs);
+void updateNI(const Name_to_ISBN & ni);
+void deleteNI(const Name_to_ISBN & ni);
 
 class Author_to_ISBN {
     public:
-    char Auther[MAX_INDEX_LEN];
+    char Author[MAX_INDEX_LEN];
     char ISBN[MAX_INDEX_LEN];
     Author_to_ISBN(const std::string & kw, const std::string & i);
-    ~Author_to_ISBN();
     std::string get_index() const;
-    bool operator< (const Author_to_ISBN & other);
-    bool operator== (const Author_to_ISBN & other);
+    bool operator< (const Author_to_ISBN & other) const;
+    bool operator== (const Author_to_ISBN & other) const;
 };
 
-bool findAuthor(const std::string & au);
-bool updateAI(const Author_to_ISBN & ai);
-bool deleteAI(const Author_to_ISBN & ai);
+bool findAuthor(const std::string & au, std::vector<std::string> ISBNs);
+void updateAI(const Author_to_ISBN & ai);
+void deleteAI(const Author_to_ISBN & ai);
