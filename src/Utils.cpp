@@ -164,7 +164,7 @@ bool KeyW_to_ISBN::operator== (const KeyW_to_ISBN & other) const {
     }
 }
 
-bool findkeyW(const std::string & kw, std::vector<std::string> ISBNs) {
+bool findkeyW(const std::string & kw, std::vector<std::string> &ISBNs) {
     std::vector<KeyW_to_ISBN> KIs;
     ISBNs.clear();
     KIs.clear();
