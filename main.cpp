@@ -21,7 +21,7 @@ int main() {
         std::getline(std::cin, input);
         in = inputHandle(input);
     } while (in.wordCount == 0);
-    while (in.wordCount == 1 && (in.words[0] == "quit" || in.words[0] == "exit")) {
+    while (!(in.wordCount == 1 && (in.words[0] == "quit" || in.words[0] == "exit"))) {
         if (in.words[0] == "su") {
             if (in.wordCount == 2) {
                 if (!checkUserID_or_Password(in.words[1]) 
