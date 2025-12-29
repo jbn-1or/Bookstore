@@ -18,8 +18,10 @@ int main() {
     UM.init_root();
     InputResult in;
     do {
-        std::string input = {};
-        std::getline(std::cin, input);
+        std::string input;
+        if (!std::getline(std::cin, input)) {
+            return 0;
+        }
         in = inputHandle(input);
     } while (in.wordCount == 0);
     while (!(in.wordCount == 1 && (in.words[0] == "quit" || in.words[0] == "exit"))) {
@@ -110,9 +112,12 @@ int main() {
                             std::cout << "\n";
                         }
                     } else if (type == 2) { //name
-                        std::vector<std::string> ISBNs = {};
+                        std::vector<std::string> ISBNs;
+                        ISBNs.clear();
                         findName(value,ISBNs);
                         std::sort(ISBNs.begin(), ISBNs.end());
+                        auto last = std::unique(ISBNs.begin(), ISBNs.end());
+                        ISBNs.erase(last, ISBNs.end());
                         bool empty = true;
                         for (size_t i = 0; i < ISBNs.size(); ++i) {
                             if (print_book(ISBNs[i])) {
@@ -123,9 +128,12 @@ int main() {
                             std::cout << "\n";
                         }
                     } else if (type == 3) { //author
-                        std::vector<std::string> ISBNs = {};
+                        std::vector<std::string> ISBNs;
+                        ISBNs.clear();
                         findAuthor(value, ISBNs);
                         std::sort(ISBNs.begin(), ISBNs.end());
+                        auto last = std::unique(ISBNs.begin(), ISBNs.end());
+                        ISBNs.erase(last, ISBNs.end());
                         bool empty = true;
                         for (size_t i = 0; i < ISBNs.size(); ++i) {
                             empty = false;
@@ -135,9 +143,12 @@ int main() {
                             std::cout << "\n";
                         }
                     } else if (type == 4) { //keyword
-                        std::vector<std::string> ISBNs = {};
+                        std::vector<std::string> ISBNs;
+                        ISBNs.clear();
                         findkeyW(value, ISBNs);
                         std::sort(ISBNs.begin(), ISBNs.end());
+                        auto last = std::unique(ISBNs.begin(), ISBNs.end());
+                        ISBNs.erase(last, ISBNs.end());
                         bool empty = true;
                         for (size_t i = 0; i < ISBNs.size(); ++i) {
                             empty = false;
@@ -184,7 +195,7 @@ int main() {
 
         } else if (in.words[0] == "select") {
             Book bk;
-            if (in.wordCount != 2 || !checkISBN(in.words[1])) {
+            if (in.wordCount != 2 || !checkISBN(in.words[1]) || UM.get_current_privilege() < 3) {
                 std::cout << "Invalid\n";
             } else if (load_book(in.words[1], bk)) {
                 UM.select_book(bk);
@@ -316,8 +327,10 @@ int main() {
             std::cout << "Invalid\n";
         }
         do {
-            std::string input = {};
-            std::getline(std::cin, input);
+            std::string input;
+            if (!std::getline(std::cin, input)) {
+                return 0;
+            }
             in = inputHandle(input);
         } while (in.wordCount == 0);
     }
