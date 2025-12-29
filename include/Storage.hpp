@@ -12,7 +12,7 @@
 #include <algorithm>
 #include <vector>
 
-const int MAX_ENTRIES_PER_BLOCK = 1000;
+const int MAX_ENTRIES_PER_BLOCK = 5000;
 const int MAX_INDEX_LEN = 64 + 1;
 
 using std::string;
