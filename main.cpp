@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cctype>
 #include <cstring>
 #include <iostream>
@@ -111,6 +112,7 @@ int main() {
                     } else if (type == 2) { //name
                         std::vector<std::string> ISBNs = {};
                         findName(value,ISBNs);
+                        std::sort(ISBNs.begin(), ISBNs.end());
                         bool empty = true;
                         for (size_t i = 0; i < ISBNs.size(); ++i) {
                             if (print_book(ISBNs[i])) {
@@ -123,6 +125,7 @@ int main() {
                     } else if (type == 3) { //author
                         std::vector<std::string> ISBNs = {};
                         findAuthor(value, ISBNs);
+                        std::sort(ISBNs.begin(), ISBNs.end());
                         bool empty = true;
                         for (size_t i = 0; i < ISBNs.size(); ++i) {
                             empty = false;
@@ -134,6 +137,7 @@ int main() {
                     } else if (type == 4) { //keyword
                         std::vector<std::string> ISBNs = {};
                         findkeyW(value, ISBNs);
+                        std::sort(ISBNs.begin(), ISBNs.end());
                         bool empty = true;
                         for (size_t i = 0; i < ISBNs.size(); ++i) {
                             empty = false;

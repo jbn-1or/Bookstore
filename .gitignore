@@ -8,3 +8,6 @@ test/
 bin/
 *.data
 *.out
+*.in
+testcases/
+run_tests

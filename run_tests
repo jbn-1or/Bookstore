@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 测试点运行脚本
 自动运行testcases文件夹中的所有测试点并比对结果
@@ -145,13 +147,12 @@ def compare_output(output, answer_file):
     
     return False, "\n".join(diff_info)
 
-def run_test_group(group, test_details):
+def run_test_group(group):
     """
     运行一个测试组
     
     Args:
         group: 测试组配置
-        test_details: 测试点详细配置字典
     
     Returns:
         tuple: (通过数, 总数, 详细结果列表)
@@ -184,11 +185,8 @@ def run_test_group(group, test_details):
             })
             continue
         
-        # 获取时间限制
-        time_limit = test_details.get(point_id, {}).get('TimeLimit', 10000)
-        
         # 运行测试
-        success, output, elapsed_time, error = run_single_test(point_id, input_file, time_limit)
+        success, output, elapsed_time, error = run_single_test(point_id, input_file)
         
         if not success:
             print(f" {Colors.RED}✗ 错误{Colors.ENDC} ({elapsed_time:.1f}ms)")
@@ -284,12 +282,6 @@ def main():
         print_colored(f"错误: 无法加载配置文件: {e}", Colors.RED)
         sys.exit(1)
     
-    # 构建测试点详细信息字典
-    test_details = {}
-    if 'Details' in config:
-        for detail in config['Details']:
-            test_details[detail['ID']] = detail
-    
     # 运行所有测试组
     total_passed = 0
     total_tests = 0
@@ -304,7 +296,7 @@ def main():
         
         print_colored(f"\n【{group_name}】[{group_idx}/{len(config['Groups'])}] (分值: {group_score}, 测试点: {test_count})", Colors.BLUE)
         
-        passed, total, results = run_test_group(group, test_details)
+        passed, total, results = run_test_group(group)
         total_passed += passed
         total_tests += total
         
