@@ -92,56 +92,60 @@ int main() {
 
         } else if ( (in.wordCount == 1 && in.words[0] == "show")
                  || in.words[0] == "show" && in.wordCount ==2 && in.words[1] != "finance") {
-            if (in.wordCount == 1) {
-                if(!show_all()) {
-                    std::cout << "\n";
-                }
+            if (UM.get_current_privilege() == 0) {
+                std::cout << "Invalid\n";
             } else {
-                std::string value = {};
-                int type = parseInfo_show(in.words[1], value);
-                if (type == 0) {
-                    std::cout << "Invalid\n";
-                } else if (type == 1) { //isbn
-                    if (!print_book(value)) {
+                if (in.wordCount == 1) {
+                    if(!show_all()) {
                         std::cout << "\n";
                     }
-                } else if (type == 2) { //name
-                    std::vector<std::string> ISBNs = {};
-                    findName(value,ISBNs);
-                    bool empty = true;
-                    for (size_t i = 0; i < ISBNs.size(); ++i) {
-                        if (print_book(ISBNs[i])) {
-                            empty = false;
+                } else {
+                    std::string value = {};
+                    int type = parseInfo_show(in.words[1], value);
+                    if (type == 0) {
+                        std::cout << "Invalid\n";
+                    } else if (type == 1) { //isbn
+                        if (!print_book(value)) {
+                            std::cout << "\n";
                         }
-                    }
-                    if (empty) {
-                        std::cout << "\n";
-                    }
-                } else if (type == 3) { //author
-                    std::vector<std::string> ISBNs = {};
-                    findAuthor(value, ISBNs);
-                    bool empty = true;
-                    for (size_t i = 0; i < ISBNs.size(); ++i) {
-                        empty = false;
-                        print_book(ISBNs[i]);
-                    }
-                    if (empty) {
-                        std::cout << "\n";
-                    }
-                } else if (type == 4) { //keyword
-                    std::vector<std::string> ISBNs = {};
-                    findkeyW(value, ISBNs);
-                    bool empty = true;
-                    for (size_t i = 0; i < ISBNs.size(); ++i) {
-                        empty = false;
-                        print_book(ISBNs[i]);
-                    }
-                    if (empty) {
-                        std::cout << "\n";
+                    } else if (type == 2) { //name
+                        std::vector<std::string> ISBNs = {};
+                        findName(value,ISBNs);
+                        bool empty = true;
+                        for (size_t i = 0; i < ISBNs.size(); ++i) {
+                            if (print_book(ISBNs[i])) {
+                                empty = false;
+                            }
+                        }
+                        if (empty) {
+                            std::cout << "\n";
+                        }
+                    } else if (type == 3) { //author
+                        std::vector<std::string> ISBNs = {};
+                        findAuthor(value, ISBNs);
+                        bool empty = true;
+                        for (size_t i = 0; i < ISBNs.size(); ++i) {
+                            empty = false;
+                            print_book(ISBNs[i]);
+                        }
+                        if (empty) {
+                            std::cout << "\n";
+                        }
+                    } else if (type == 4) { //keyword
+                        std::vector<std::string> ISBNs = {};
+                        findkeyW(value, ISBNs);
+                        bool empty = true;
+                        for (size_t i = 0; i < ISBNs.size(); ++i) {
+                            empty = false;
+                            print_book(ISBNs[i]);
+                        }
+                        if (empty) {
+                            std::cout << "\n";
+                        }
                     }
                 }
             }
-
+            
         } else if (in.words[0] == "buy") {
             Book bk = {};
             int num = 0;
@@ -264,7 +268,7 @@ int main() {
             long long num;
             if (in.wordCount != 3 || UM.get_current_privilege() < 3 || UM.has_selected.empty() || !UM.has_selected.back()
                     || !checkQuantity(in.words[1], quan) || !checkPrice_or_TotalCost(in.words[2], num)) {
-                std::cout << "1111Invalid\n";
+                std::cout << "Invalid\n";
             } else {
                 if (UM.get_select_book(bk)) {
                     Book newbk = bk;
@@ -279,10 +283,10 @@ int main() {
                         ta.amount = -num;
                         TM.addRecorg(ta);
                     } else {
-                        std::cout << "222Invalid\n";
+                        std::cout << "Invalid\n";
                     }
                 } else {
-                    std::cout << "333Invalid\n";
+                    std::cout << "Invalid\n";
                 }
             }
         } else if ((in.words[0] == "show" && in.wordCount > 1 && in.words[1] == "finance")) {
