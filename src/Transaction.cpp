@@ -46,8 +46,8 @@ TransManager::~TransManager() {
     TransMem.write_info(trans_times_when_open + trans_in_thisregis.size(), 1);
     TransMem.write_info(income_up, 2);
     TransMem.write_info(income_down, 3);
-    TransMem.write_info(outcome_up, 4);
-    TransMem.write_info(outcome_down, 5);
+    TransMem.write_info(-outcome_up, 4);
+    TransMem.write_info(-outcome_down, 5);
 }
 
 void TransManager::addRecorg(const Transaction &other) {
@@ -81,31 +81,43 @@ void TransManager::searchAllRecord() {
 bool TransManager::seatchRecord(const int count) {
     Transaction tmp;
     int trans_times_thisregis = trans_in_thisregis.size();
-    //回溯的次数
-    int back = count - trans_times_thisregis;
-    if (back > trans_times_when_open) {
-        return false;
-    }
-    int start = sizeof(int) + (trans_times_when_open - back) * sizeofTr;
     long long income = 0;
     long long outcome = 0;
-    for (int i = trans_times_when_open - back; i < trans_times_when_open; ++i) {
-        TransMem.read(tmp, start);
-        long long a = tmp.amount;
-        if (a > 0) {
-            income += a;
-        } else {
-            outcome += a;
+    //回溯的次数
+    int back = count - trans_times_thisregis;
+    if (back <= 0) {
+        for (int i = trans_in_thisregis.size() - count; i < trans_in_thisregis.size(); ++i) {
+            tmp = trans_in_thisregis[i];
+            long long a = tmp.amount;
+            if (a > 0) {
+                income += a;
+            } else {
+                outcome += a;
+            }
         }
-        start += sizeofTr;
-    }
-    for (int i = 0; i < trans_in_thisregis.size(); ++i) {
-        tmp = trans_in_thisregis[i];
-        long long a = tmp.amount;
-        if (a > 0) {
-            income += a;
-        } else {
-            outcome += a;
+    } else {
+        if (back > trans_times_when_open) {
+            return false;
+        }
+        int start = sizeof(int) + (trans_times_when_open - back) * sizeofTr;
+        for (int i = trans_times_when_open - back; i < trans_times_when_open; ++i) {
+            TransMem.read(tmp, start);
+            long long a = tmp.amount;
+            if (a > 0) {
+                income += a;
+            } else {
+                outcome += a;
+            }
+            start += sizeofTr;
+        }
+        for (int i = 0; i < trans_in_thisregis.size(); ++i) {
+            tmp = trans_in_thisregis[i];
+            long long a = tmp.amount;
+            if (a > 0) {
+                income += a;
+            } else {
+                outcome += a;
+            }
         }
     }
     long long income_int = income / 100;

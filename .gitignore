@@ -7,3 +7,4 @@ test/
 标准要求.md
 bin/
 *.data
+*.out

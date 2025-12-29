@@ -161,6 +161,11 @@ int main() {
                         ta.operator_id[MAX_INDEX_LEN - 1] = '\0';
                         ta.amount = (bk.price_up * UP + bk.price_down) * num;
                         TM.addRecorg(ta);
+                        long long total_price = (bk.price_up * UP + bk.price_down) * num;
+                        long long price_int = total_price / 100;
+                        int price_dec = total_price % 100;
+                        std::cout << price_int << "."
+                            << std::setw(2) << std::setfill('0') << price_dec << "\n";
                     } else {
                         std::cout << "Invalid\n";
                     }       
