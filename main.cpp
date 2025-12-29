@@ -235,9 +235,9 @@ int main() {
                     if (!flag) {
                         std::cout << "Invalid\n";
                     } else {
-                        Book bk;
+                        Book bk, old_bk;
                         UM.get_select_book(bk);
-
+                        old_bk = bk;
                         bool ok = true;
                         int isbn_idx = -1;
 
@@ -271,6 +271,7 @@ int main() {
                             // 若全部成功，刷新选中书以同步 UM 状态与存储
                             if (ok) {
                                 UM.select_book(bk);
+                                UM.update_book_stack(old_bk, bk);
                             }
                         }
                     }
