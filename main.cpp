@@ -90,30 +90,55 @@ int main() {
                 std::cout << "Invalid\n";
             }
 
-        } else if (in.words[0] == "show" && in.wordCount > 1 && in.words[1] != "finance") {
-            std::string value = {};
-            int type = parseInfo_show(in.words[1], value);
-            if (type == 0) {
-                std::cout << "Invalid\n";
-            } else if (type == 1) { //isbn
-                print_book(value);
-            } else if (type == 2) { //name
-                std::vector<std::string> ISBNs = {};
-                findName(value,ISBNs);
-                for (size_t i = 0; i < ISBNs.size(); ++i) {
-                    print_book(ISBNs[i]);
+        } else if ( (in.wordCount == 1 && in.words[0] == "show")
+                 || in.words[0] == "show" && in.wordCount ==2 && in.words[1] != "finance") {
+            if (in.wordCount == 1) {
+                if(!show_all()) {
+                    std::cout << "\n";
                 }
-            } else if (type == 3) { //author
-                std::vector<std::string> ISBNs = {};
-                findAuthor(value, ISBNs);
-                for (size_t i = 0; i < ISBNs.size(); ++i) {
-                    print_book(ISBNs[i]);
-                }
-            } else if (type == 4) { //keyword
-                std::vector<std::string> ISBNs = {};
-                findkeyW(value, ISBNs);
-                for (size_t i = 0; i < ISBNs.size(); ++i) {
-                    print_book(ISBNs[i]);
+            } else {
+                std::string value = {};
+                int type = parseInfo_show(in.words[1], value);
+                if (type == 0) {
+                    std::cout << "Invalid\n";
+                } else if (type == 1) { //isbn
+                    if (!print_book(value)) {
+                        std::cout << "\n";
+                    }
+                } else if (type == 2) { //name
+                    std::vector<std::string> ISBNs = {};
+                    findName(value,ISBNs);
+                    bool empty = true;
+                    for (size_t i = 0; i < ISBNs.size(); ++i) {
+                        if (print_book(ISBNs[i])) {
+                            empty = false;
+                        }
+                    }
+                    if (empty) {
+                        std::cout << "\n";
+                    }
+                } else if (type == 3) { //author
+                    std::vector<std::string> ISBNs = {};
+                    findAuthor(value, ISBNs);
+                    bool empty = true;
+                    for (size_t i = 0; i < ISBNs.size(); ++i) {
+                        empty = false;
+                        print_book(ISBNs[i]);
+                    }
+                    if (empty) {
+                        std::cout << "\n";
+                    }
+                } else if (type == 4) { //keyword
+                    std::vector<std::string> ISBNs = {};
+                    findkeyW(value, ISBNs);
+                    bool empty = true;
+                    for (size_t i = 0; i < ISBNs.size(); ++i) {
+                        empty = false;
+                        print_book(ISBNs[i]);
+                    }
+                    if (empty) {
+                        std::cout << "\n";
+                    }
                 }
             }
 
@@ -234,9 +259,9 @@ int main() {
             long long num;
             if (in.wordCount != 3 || UM.get_current_privilege() < 3 || UM.has_selected.empty() || !UM.has_selected.back()
                     || !checkQuantity(in.words[1], quan) || !checkPrice_or_TotalCost(in.words[2], num)) {
-                std::cout << "Invalid\n";
+                std::cout << "1111Invalid\n";
             } else {
-                if (load_book(in.words[1], bk)) {
+                if (UM.get_select_book(bk)) {
                     Book newbk = bk;
                     if (newbk.increase_quantity(quan)) {
                         UM.update_book_stack(bk, newbk);
@@ -249,13 +274,13 @@ int main() {
                         ta.amount = -num;
                         TM.addRecorg(ta);
                     } else {
-                        std::cout << "Invalid\n";
+                        std::cout << "222Invalid\n";
                     }
                 } else {
-                    std::cout << "Invalid\n";
+                    std::cout << "333Invalid\n";
                 }
             }
-        } else if (in.words[0] == "show" && in.wordCount > 1 && in.words[1] == "finance") {
+        } else if ((in.words[0] == "show" && in.wordCount > 1 && in.words[1] == "finance")) {
             int num;
             if (UM.get_current_privilege() != 7) {
                 std::cout << "Invalid\n";

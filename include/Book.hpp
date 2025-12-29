@@ -52,3 +52,4 @@ bool find_book(const std::string &bool_id);
 bool print_book(const std::string &book_id);
 bool delete_isbn(const std::string& book_id); 
 void update_book(const Book & _book);
+bool show_all();

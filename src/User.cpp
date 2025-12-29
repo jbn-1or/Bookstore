@@ -100,8 +100,11 @@ void UserManager::select_book(const Book & bk) {
     has_selected.back() = true;
 }
 
-void UserManager::get_select_book(Book &bk) {
-    bk = select_book_stack.back();
+bool UserManager::get_select_book(Book &bk) {
+    if (!select_book_stack.empty()) {
+        bk = select_book_stack.back();
+        return true;
+    } else return false;
 }
 
 void UserManager::update_book_stack(const Book & bk, const Book & newbook) {

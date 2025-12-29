@@ -236,3 +236,11 @@ void update_book(const Book &_book) {
     BookDataManager.insertEntry(_book);
     return;
 }
+
+bool show_all() {
+    if (BookDataManager.printAllEntries()) {
+        return true;
+    } else {
+        return false;
+    }
+}

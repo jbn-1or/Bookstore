@@ -335,4 +335,23 @@ public:
         }
         else return true;
     }
+
+    bool printAllEntries() {
+        int current_block_id = first_block_id_;
+        BlockType current_block{};
+        bool not_empty = false;
+        while (current_block_id != -1) {
+            mem_river.read(current_block, current_block_id);
+            if (current_block.num_entries == 0) {
+                continue;
+            } else {
+                not_empty = true;
+                for (int i = 0; i < current_block.num_entries; ++i) {
+                    std::cout << current_block.ob[i];
+                }
+            }
+            current_block_id = current_block.next_block_id;
+        }
+        return not_empty;
+    }
 };

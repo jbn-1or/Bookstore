@@ -48,7 +48,7 @@ public:
     bool register_user(const std::string& user_id, const std::string& pwd, const int priv ,const std::string& name);
     bool login(const std::string& user_id, const std::string& pwd);
     void select_book(const Book & bk);
-    void get_select_book(Book &bk);
+    bool get_select_book(Book &bk);
     std::vector<bool> has_selected;
     void update_book_stack(const Book & bk, const Book & newbook);
     bool logout();
