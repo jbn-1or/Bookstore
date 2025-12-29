@@ -46,11 +46,9 @@ bool Book::set_name(const std::string& new_name) {
     }
     //删NI
     std::string i(isbn);
-    if (name[0] != '\0') {
-        std::string na(name);
-        Name_to_ISBN NI(na, i);
-        deleteNI(NI);
-    }
+    std::string na(name);
+    Name_to_ISBN NI(na, i);
+    deleteNI(NI);
     //添新NI
     Name_to_ISBN NI_(new_name, i);
     updateNI(NI_);
@@ -66,12 +64,13 @@ bool Book::set_author(const std::string& new_author) {
     if (new_author.empty()) {
         return false;
     }
+    if (new_author == std::string(author)) {
+        return true;
+    }
     //删AI
     std::string i(isbn);
-    if (author[0] != '\0') {
-        Author_to_ISBN oldAI(author, i);
-        deleteAI(oldAI);
-    }
+    Author_to_ISBN oldAI(author, i);
+    deleteAI(oldAI);
     //添新AI
     Author_to_ISBN newAI(new_author, i);
     updateAI(newAI);

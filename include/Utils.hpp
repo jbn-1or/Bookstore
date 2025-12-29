@@ -53,7 +53,7 @@ class Author_to_ISBN {
     char ISBN[MAX_INDEX_LEN] = {};
 
     Author_to_ISBN() = default;
-    Author_to_ISBN(const std::string & kw, const std::string & i);
+    Author_to_ISBN(const std::string & au, const std::string & i);
     std::string get_index() const;
     bool operator< (const Author_to_ISBN & other) const;
     bool operator== (const Author_to_ISBN & other) const;

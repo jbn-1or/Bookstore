@@ -116,8 +116,8 @@ int main() {
                         ISBNs.clear();
                         findName(value,ISBNs);
                         std::sort(ISBNs.begin(), ISBNs.end());
-                        auto last = std::unique(ISBNs.begin(), ISBNs.end());
-                        ISBNs.erase(last, ISBNs.end());
+                        // auto last = std::unique(ISBNs.begin(), ISBNs.end());
+                        // ISBNs.erase(last, ISBNs.end());
                         bool empty = true;
                         for (size_t i = 0; i < ISBNs.size(); ++i) {
                             if (print_book(ISBNs[i])) {
@@ -132,8 +132,8 @@ int main() {
                         ISBNs.clear();
                         findAuthor(value, ISBNs);
                         std::sort(ISBNs.begin(), ISBNs.end());
-                        auto last = std::unique(ISBNs.begin(), ISBNs.end());
-                        ISBNs.erase(last, ISBNs.end());
+                        // auto last = std::unique(ISBNs.begin(), ISBNs.end());
+                        // ISBNs.erase(last, ISBNs.end());
                         bool empty = true;
                         for (size_t i = 0; i < ISBNs.size(); ++i) {
                             empty = false;
@@ -147,8 +147,8 @@ int main() {
                         ISBNs.clear();
                         findkeyW(value, ISBNs);
                         std::sort(ISBNs.begin(), ISBNs.end());
-                        auto last = std::unique(ISBNs.begin(), ISBNs.end());
-                        ISBNs.erase(last, ISBNs.end());
+                        // auto last = std::unique(ISBNs.begin(), ISBNs.end());
+                        // ISBNs.erase(last, ISBNs.end());
                         bool empty = true;
                         for (size_t i = 0; i < ISBNs.size(); ++i) {
                             empty = false;
