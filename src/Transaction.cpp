@@ -99,7 +99,7 @@ bool TransManager::seatchRecord(const int count) {
         if (back > trans_times_when_open) {
             return false;
         }
-        int start = sizeof(int) + (trans_times_when_open - back) * sizeofTr;
+        int start = 5 * sizeof(int) + (trans_times_when_open - back) * sizeofTr;
         for (int i = trans_times_when_open - back; i < trans_times_when_open; ++i) {
             TransMem.read(tmp, start);
             long long a = tmp.amount;
