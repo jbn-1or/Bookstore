@@ -178,9 +178,9 @@ int main() {
                         strcpy(ta.isbn, newbk.isbn);
                         std::strncpy(ta.operator_id, UM.get_current_user_id().c_str(), MAX_INDEX_LEN - 1);
                         ta.operator_id[MAX_INDEX_LEN - 1] = '\0';
-                        ta.amount = (bk.price_up * UP + bk.price_down) * num;
+                        ta.amount = (1LL * bk.price_up * UP + bk.price_down) * num * 1LL;
                         TM.addRecorg(ta);
-                        long long total_price = (bk.price_up * UP + bk.price_down) * num;
+                        long long total_price = (1LL * bk.price_up * UP + bk.price_down) * num * 1LL;
                         long long price_int = total_price / 100;
                         int price_dec = total_price % 100;
                         std::cout << price_int << "."

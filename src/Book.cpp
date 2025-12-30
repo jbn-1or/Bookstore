@@ -135,8 +135,8 @@ bool Book::set_keyword(const std::string& new_keyword) {
 
 bool Book::set_price(const long long & newp) {
     if (newp < 0) return false;
-    price_up = newp / 100000000;
-    price_down = newp % 100000000;
+    price_up = newp / 10000000;
+    price_down = newp % 10000000;
     update_book(*this);
     return true;
 }

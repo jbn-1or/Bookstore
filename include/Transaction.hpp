@@ -4,7 +4,7 @@
 
 #include "Storage.hpp"
 
-const int UP = 100000000;
+const int UP = 10000000;
 
 struct Transaction {
     bool type;                 // 1"buy" 或 0"import"
@@ -27,8 +27,8 @@ class TransManager {
     MemoryRiver <Transaction, 5> TransMem; 
     std::vector<Transaction> trans_in_thisregis = {};
     int trans_times_when_open;
-    int income_when_open_up; //乘100的前
-    int income_when_open_down; //乘100的后8位
+    int income_when_open_up; //乘100的前几位
+    int income_when_open_down; //乘100的后7位
     int outcome_when_open_up;
     int outcome_when_open_down;
 

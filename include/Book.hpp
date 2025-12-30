@@ -11,7 +11,7 @@ public:
     char author[MAX_INDEX_LEN] = {};        // 作者
     char keyword[MAX_INDEX_LEN] = {};       // 关键词
     int price_up = 0;              // 单价高位
-    int price_down = 0;            // 乘100后最低八位
+    int price_down = 0;            // 乘100后最低七位
     int quantity = 0;              // 库存数量（≥0）
 
     Book() = default;
@@ -35,7 +35,7 @@ public:
 
 //重载流运算 <<
 inline std::ostream & operator<< (std::ostream &os, const Book& book) {
-     long long PRC = book.price_up * 100000000 + book.price_down;
+     long long PRC = book.price_up * 10000000 + book.price_down;
      int price_int = PRC / 100;
      int price_dec = PRC % 100;
      os << std::string(book.isbn) << "\t"

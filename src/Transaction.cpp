@@ -12,7 +12,7 @@ TransManager::TransManager(const string& filename) : TransMem(filename){
         TransMem.write_info(0, 1);
         trans_times_when_open = 0;
         income_when_open_up = 0; //乘100的前
-        income_when_open_down = 0; //乘100的后8位
+        income_when_open_down = 0; //乘100的后7位
         outcome_when_open_up = 0;
         outcome_when_open_down = 0;
     } else {
