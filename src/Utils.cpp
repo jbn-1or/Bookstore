@@ -152,8 +152,12 @@ std::string KeyW_to_ISBN::get_index() const {
 }
 
 bool KeyW_to_ISBN::operator< (const KeyW_to_ISBN & other) const {
-    return this->get_index() < other.get_index();
+    if (this->get_index() != other.get_index())
+    {
+        return this->get_index() < other.get_index();
+    } else return std::string(this->ISBN) < std::string(other.ISBN);
 }
+
 bool KeyW_to_ISBN::operator== (const KeyW_to_ISBN & other) const {
     std::string tmp1(this->ISBN);
     std::string tmp2(other.ISBN);
@@ -198,7 +202,10 @@ std::string Name_to_ISBN::get_index() const {
 }
 
 bool Name_to_ISBN::operator< (const Name_to_ISBN &other) const {
-    return this->get_index() < other.get_index();
+    if (this->get_index() != other.get_index())
+    {
+        return this->get_index() < other.get_index();
+    } else return std::string(this->ISBN) < std::string(other.ISBN);
 }
 
 bool Name_to_ISBN::operator== (const Name_to_ISBN &other) const {
@@ -230,6 +237,10 @@ void deleteNI(const Name_to_ISBN &ni) {
     NIManager.deleteEntry(ni);
 }
 
+void show_all_name() {
+    NIManager.printAllEntries();
+}
+
 BlockListManager<Author_to_ISBN> AIManager("Author-ISBN.data", MAX_INDEX_LEN, MAX_ENTRIES_PER_BLOCK);
 
 Author_to_ISBN::Author_to_ISBN(const std::string &au, const std::string &i) {
@@ -244,7 +255,10 @@ std::string Author_to_ISBN::get_index() const {
 }
 
 bool Author_to_ISBN::operator< (const Author_to_ISBN &other) const {
-    return this->get_index() < other.get_index();
+    if (this->get_index() != other.get_index())
+    {
+        return this->get_index() < other.get_index();
+    } else return std::string(this->ISBN) < std::string(other.ISBN);
 }
 
 bool Author_to_ISBN::operator== (const Author_to_ISBN &other) const {

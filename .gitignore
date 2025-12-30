@@ -11,3 +11,4 @@ bin/
 *.in
 testcases/
 run_tests
+docx/

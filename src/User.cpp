@@ -96,7 +96,8 @@ void UserManager::init_root() {
 }
 
 void UserManager::select_book(const Book & bk) {
-    select_book_stack.back() = bk;
+    select_book_stack.pop_back();
+    select_book_stack.push_back(bk);
     has_selected.back() = true;
 }
 

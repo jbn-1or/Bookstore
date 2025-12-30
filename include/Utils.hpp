@@ -1,6 +1,8 @@
 #pragma once
 
+#include "Book.hpp"
 #include "Storage.hpp"
+#include <ostream>
 #include <string>
 
 //检查字符情况的类
@@ -43,9 +45,16 @@ class Name_to_ISBN {
     bool operator== (const Name_to_ISBN & other) const;
 };
 
+inline std::ostream & operator<<(std::ostream &os, Name_to_ISBN & NI) {
+    os << std::string(NI.ISBN) << "\t" << std::string(NI.Name) << std::endl;
+    return os;
+}
+
 bool findName(const std::string & na, std::vector<std::string> &ISBNs);
 void updateNI(const Name_to_ISBN & ni);
 void deleteNI(const Name_to_ISBN & ni);
+
+void show_all_name();
 
 class Author_to_ISBN {
     public:

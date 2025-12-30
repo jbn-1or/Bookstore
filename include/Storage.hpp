@@ -343,6 +343,7 @@ public:
         while (current_block_id != -1) {
             mem_river.read(current_block, current_block_id);
             if (current_block.num_entries == 0) {
+                current_block_id = current_block.next_block_id;
                 continue;
             } else {
                 not_empty = true;
